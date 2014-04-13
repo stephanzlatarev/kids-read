@@ -1,6 +1,8 @@
-# language setting
 language: java
-
-# jdk tag
+script: mvn clean install
 jdk:
  - oraclejdk7
+ matrix:
+  include:
+  - jdk: oraclejdk7
+    script: mvn appengine:update

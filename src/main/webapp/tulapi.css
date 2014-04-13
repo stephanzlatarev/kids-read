@@ -1,0 +1,27 @@
+.word {
+  float: left;
+  margin-left: 4px;
+}
+.blurred {
+  color: Silver;
+}
+.focused {
+  color: Black;
+  font-size: 50px;
+}
+
+.screen {
+  width: 100%;
+}
+#test {
+  background-color: LightBlue;
+}
+
+.answer {
+  display: inline;
+  background-color: White;
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  padding: 50px;
+}

@@ -102,7 +102,7 @@
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.target.version}</version>
                 <configuration>
-                    <email>kids.read.app@email.com</email>
+                    <email>kids.read.app@gmail.com</email>
                     <oauth2>false</oauth2>
                     <noCookies>true</noCookies>
                     <passin>true</passin>

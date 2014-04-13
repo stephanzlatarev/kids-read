@@ -101,6 +101,12 @@
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.target.version}</version>
+                <configuration>
+                    <email>stephan.zlatarev@email.com</email>
+                    <oauth2>false</oauth2>
+                    <noCookies>true</noCookies>
+                    <passin>true</passin>
+                </configuration>
             </plugin>
         </plugins>
     </build>

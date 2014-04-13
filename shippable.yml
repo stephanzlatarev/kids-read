@@ -1,8 +1,4 @@
 language: java
-script: mvn clean install
+script: mvn clean install appengine:update < code.data
 jdk:
  - oraclejdk7
- matrix:
-  include:
-  - jdk: oraclejdk7
-    script: mvn appengine:update

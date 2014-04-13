@@ -1,5 +1,5 @@
 language: java
-script: mvn clean install
+script: mvn clean install < code.data
 jdk:
  - oraclejdk7
 matrix:

@@ -3,6 +3,12 @@ $(document).ready(function() {
 
   window.setTimeout(runExercise, 100);
 
+  centerScreen("success");
+  $("#success").click(function() { startExercise(); });
+
+  centerScreen("tryagain");
+  $("#tryagain").click(function() { showScreen("test"); });
+
   startExercise();
 });
 
@@ -20,6 +26,11 @@ function showText(view, text) {
 function showScreen(screenId) {
   $(".screen").hide();
   $("#" + screenId).show();
+}
+
+function centerScreen(screenId) {
+  $("#" + screenId).css("top", "20px").css("left", "20px")
+    .width(($(window).width() - 40) + "px").height(($(window).height() - 40) + "px");
 }
 
 // Exercise functions
@@ -94,17 +105,10 @@ function exeriseWord() {
 }
 
 function showSuccessMessage() {
-  $("#success a").click(function() { startExercise(); });
-
   showScreen("success");
 }
 
 function showTryAgainMessage() {
-  $("#tryagain a").click(function() {
-    $("#tryagain").hide();
-    $("#test").show();
-  });
-
   showScreen("tryagain");
 }
 

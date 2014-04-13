@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
  <head>
+  <meta name="viewport" content="width=device-width"></meta>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Tulapy</title>
+  <title>Tulapi</title>
   <link rel="stylesheet" type="text/css" href="tulapi.css">
   <script src="jquery-1.9.1.js"></script>
   <script src="session.js"></script>
@@ -10,14 +11,25 @@
  </head>
 
  <body>
+
   <div id="exercise" class="screen"></div>
+
   <div id="test" class="screen">
     <div id="answer1" class="answer focused"></div>
     <div id="answer2" class="answer focused"></div>
     <div id="answer3" class="answer focused"></div>
   </div>
-  <div id="success" class="screen"><a href="#">Браво!</a></div>
-  <div id="tryagain" class="screen"><a href="#">Не! Опитай отново!</a></div>
+
+  <div id="success" class="screen">
+    <div class="headline"><center>Браво!</center></div>
+    <div class="headline"><center><img src="./pics/success_0.png" /></center></div>
+  </div>
+
+  <div id="tryagain" class="screen">
+    <div class="headline"><center>Не! Опитай отново!</center></div>
+    <div class="headline"><center><img src="./pics/tryagain_0.png" /></center></div>
+  </div>
+
  </body>
 
 </html>

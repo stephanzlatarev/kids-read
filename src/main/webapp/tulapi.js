@@ -3,6 +3,8 @@ $(document).ready(function() {
 
   window.setTimeout(runExercise, 100);
 
+  centerScreen("test");
+
   centerScreen("success");
   $("#success").click(function() { startExercise(); });
 
@@ -52,9 +54,13 @@ function startExercise() {
 
   // TODO: select similar words. Again, use session contents
   context.falseWords = [];
-  for (var i = 0; i < 2; i++) {
-    var randomWord = Math.floor(Math.random() * words.length);
-    context.falseWords.push(formatWord(words[randomWord]));
+  while (context.falseWords.length < 2) {
+    var randomWordIndex = Math.floor(Math.random() * words.length);
+    var randomWord = formatWord(words[randomWordIndex]);
+
+    if ((randomWord != context.textWord) && (context.falseWords.indexOf(randomWord) < 0)) {
+      context.falseWords.push(randomWord);
+    }
   }
 
   context.response = null;
@@ -84,19 +90,35 @@ function exeriseWord() {
       function(context) {
         context.wordElement.removeClass("focused").addClass("blurred"); // restore style of exercised word
 
-        // TODO: randomize the order of answers
-        $("#answer1").empty().append($("<a href='#'>").text(context.falseWords[0]).click(function() {
-          context.response = "wrong";
-          showTryAgainMessage();
-        }));
-        $("#answer2").empty().append($("<a href='#'>").text(context.testWord).click(function() {
-          context.response = "correct";
-          showSuccessMessage();
-        }));
-        $("#answer3").empty().append($("<a href='#'>").text(context.falseWords[1]).click(function() {
-          context.response = "wrong";
-          showTryAgainMessage();
-        }));
+        var answers = [];
+        answers.push(createAnswerTile(context.testWord)
+                .click(function() {
+                  context.response = "correct";
+                  showSuccessMessage();
+                }
+              )
+        );
+        answers.push(createAnswerTile(context.falseWords[0])
+                .click(function() {
+                  context.response = "wrong";
+                  showTryAgainMessage();
+                }
+              )
+        );
+        answers.push(createAnswerTile(context.falseWords[1])
+                .click(function() {
+                  context.response = "wrong";
+                  showTryAgainMessage();
+                }
+              )
+        );
+
+        $("#answers").empty();
+        while (answers.length > 0) {
+          var ai = Math.floor(answers.length * Math.random());
+          var a = answers.splice(ai, 1);
+          $("#answers").append(a);
+        }
 
         showScreen("test");
       }
@@ -114,4 +136,21 @@ function showTryAgainMessage() {
 
 function formatWord(word) {
   return word.toLowerCase().split(",")[0].split(".")[0];
+}
+
+function createAnswerTile(word) {
+  var tileSpace = ($('body').innerWidth() - 50) / 3 - 8; // minus 2x border = 8px
+  var tileUnit = Math.floor(tileSpace / 14);
+  var width = tileUnit * 10;
+  var padding = tileUnit;
+  var margin = tileUnit;
+  var fontSize = Math.floor(100 * width / 100);
+
+  return $("<div>").addClass("answer").addClass("focused")
+    .css("width", "" + width + "px")
+    .css("margin", "" + margin + "px")
+    .css("padding", "" + padding + "px")
+    .css("font-size", "" + fontSize + "%")
+    .html(word)
+    .append("<img src='pics/paw.jpg' width='50px' style='display: block; margin: 50px auto;' />");
 }

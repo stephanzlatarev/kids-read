@@ -7,23 +7,24 @@
 }
 .focused {
   color: Black;
-  font-size: 50px;
+  font-size: 40px;
 }
 
 .screen {
   width: 100%;
 }
-#test {
-  background-color: LightBlue;
-}
 
 .answer {
-  display: inline;
+  display: inline-block;
+  float: left;
+  border: 4px solid black;
   background-color: White;
   width: 200px;
   height: 200px;
-  margin: 20px;
-  padding: 50px;
+  margin: 30px;
+  padding: 30px;
+  text-align: center;
+  text-decoration: none;
 }
 
 .headline {

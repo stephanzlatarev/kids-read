@@ -58,7 +58,7 @@ function startExercise() {
     var randomWordIndex = Math.floor(Math.random() * words.length);
     var randomWord = formatWord(words[randomWordIndex]);
 
-    if ((randomWord != context.textWord) && (context.falseWords.indexOf(randomWord) < 0)) {
+    if ((randomWord != context.testWord) && (context.falseWords.indexOf(randomWord) < 0)) {
       context.falseWords.push(randomWord);
     }
   }

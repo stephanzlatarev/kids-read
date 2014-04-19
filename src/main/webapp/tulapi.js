@@ -1,7 +1,8 @@
 $(document).ready(function() {
   showText($("#exercise"), session.text);
 
-  window.setTimeout(runExercise, 100);
+  centerScreen("exercise");
+  $("#exercise").click(function() { Timer.setTimer(1); });
 
   centerScreen("test");
 
@@ -12,6 +13,8 @@ $(document).ready(function() {
   $("#tryagain").click(function() { showScreen("test"); });
 
   startExercise();
+
+  window.setInterval(runExercise, 100);
 });
 
 var words = [];
@@ -64,30 +67,30 @@ function startExercise() {
   }
 
   context.response = null;
+  context.step = 0;
 
   exercise = exeriseWord();
 }
 
 function runExercise() {
-  if (exercise && exercise[0] && (!exercise[0].check || exercise[0].check(context))) {
-    exercise[0].execute(context);
-    exercise = exercise.splice(1);
+  if (!exercise[context.step].check || exercise[context.step].check(context)) {
+    exercise[context.step++].execute(context);
   }
-  window.setTimeout(runExercise, 100);
 }
 
 function exeriseWord() {
   return [
     new ExerciseStep(null, function(context) {
+        Timer.clearTimer();
         context.wordElement.removeClass("blurred").addClass("focused"); // highlight the exercised word
-        context.time = new Date().getTime() + 3000; // set timer to 3 seconds
       }
     ),
     new ExerciseStep(
       function(context) {
-        return new Date().getTime() > context.time; // check if timer is complete
+        return Timer.isTimeUp();
       },
       function(context) {
+        Timer.clearTimer();
         context.wordElement.removeClass("focused").addClass("blurred"); // restore style of exercised word
 
         var answers = [];
@@ -95,6 +98,7 @@ function exeriseWord() {
                 .click(function() {
                   context.response = "correct";
                   showSuccessMessage();
+                  Timer.setTimer();
                 }
               )
         );
@@ -102,6 +106,7 @@ function exeriseWord() {
                 .click(function() {
                   context.response = "wrong";
                   showTryAgainMessage();
+                  Timer.setTimer();
                 }
               )
         );
@@ -109,6 +114,7 @@ function exeriseWord() {
                 .click(function() {
                   context.response = "wrong";
                   showTryAgainMessage();
+                  Timer.setTimer();
                 }
               )
         );
@@ -121,6 +127,18 @@ function exeriseWord() {
         }
 
         showScreen("test");
+      }
+    ),
+    new ExerciseStep(
+      function(context) {
+        return Timer.isTimeUp();
+      },
+      function(context) {
+        if (context.response == "correct") {
+          startExercise();
+        } else {
+          context.step -= 2;
+        }
       }
     )
   ];
@@ -153,4 +171,23 @@ function createAnswerTile(word) {
     .css("font-size", "" + fontSize + "%")
     .html(word)
     .append("<img src='pics/paw.jpg' width='50px' style='display: block; margin: 50px auto;' />");
+}
+
+// Timer functions
+var Timer = new function() {
+
+  this.time = Number.MAX_VALUE;
+
+  this.isTimeUp = function() {
+    return new Date().getTime() > Timer.time;
+  }
+
+  this.clearTimer = function() {
+    Timer.time = Number.MAX_VALUE;
+  }
+
+  this.setTimer = function(millis) {
+    Timer.time = new Date().getTime() + ((millis) ? millis : 1500);
+  }
+
 }

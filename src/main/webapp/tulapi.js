@@ -58,8 +58,7 @@ function startExercise() {
   // TODO: select similar words. Again, use session contents
   context.falseWords = [];
   while (context.falseWords.length < 2) {
-    var randomWordIndex = Math.floor(Math.random() * words.length);
-    var randomWord = formatWord(words[randomWordIndex]);
+    var randomWord = tweakWord(context.testWord);
 
     if ((randomWord != context.testWord) && (context.falseWords.indexOf(randomWord) < 0)) {
       context.falseWords.push(randomWord);
@@ -70,6 +69,12 @@ function startExercise() {
   context.step = 0;
 
   exercise = exeriseWord();
+}
+
+function tweakWord(word) {
+  var at =  Math.floor(Math.random() * word.length);
+  var c = String.fromCharCode(97 + Math.round(Math.random() * 25));
+  return word.substr(0, at) + c + word.substr(at + 1);
 }
 
 function runExercise() {

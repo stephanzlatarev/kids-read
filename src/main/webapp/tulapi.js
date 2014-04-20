@@ -73,7 +73,7 @@ function startExercise() {
 
 function tweakWord(word) {
   var at =  Math.floor(Math.random() * word.length);
-  var c = String.fromCharCode(97 + Math.round(Math.random() * 25));
+  var c = String.fromCharCode('а'.charCodeAt() + Math.round(Math.random() * 30));
   return word.substr(0, at) + c + word.substr(at + 1);
 }
 
